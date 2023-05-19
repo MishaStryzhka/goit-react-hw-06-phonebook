@@ -2,7 +2,8 @@ import FormContacts from "components/FormContacts/FormContacts";
 import FormFind from "components/FormFind/FormFind";
 import css from './Phonebook.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { addContacts, deleteContacts, setFilter } from "redux/actions";
+import { setFilter } from "redux/filter/actions";
+import { addContacts, deleteContacts } from "redux/contacts/actions";
 
 const Phonebook = () => {
 

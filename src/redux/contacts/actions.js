@@ -16,10 +16,3 @@ export const deleteContacts = contactsId => {
         payload: contactsId,
     };
 };
-
-export const setFilter = value => {
-    return {
-        type: "filter/setFilter",
-        payload: value,
-    };
-};
