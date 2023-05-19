@@ -1,6 +1,3 @@
-export const setFilter = value => {
-    return {
-        type: "filter/setFilter",
-        payload: value,
-    };
-};
+import { createAction } from "@reduxjs/toolkit";
+
+export const setFilter = createAction("filter/setFilter")
