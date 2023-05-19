@@ -1,27 +1,15 @@
-
-import { nanoid } from "nanoid";
-
 import FormContacts from "components/FormContacts/FormContacts";
 import FormFind from "components/FormFind/FormFind";
 import css from './Phonebook.module.css';
-import { useState, useEffect } from "react";
-
-const KEYCONTACTS = "contacts";
+import { useDispatch, useSelector } from "react-redux";
+import { addContacts, deleteContacts, setFilter } from "redux/actions";
 
 const Phonebook = () => {
-    const [contacts, setContacts] = useState([]);
-    const [filter, setFilter] = useState("")
 
+    const contacts = useSelector((state) => state.contacts);
+    const filter = useSelector((state) => state.filter);
 
-    useEffect(() => {
-        if (localStorage.getItem(KEYCONTACTS)) {
-            setContacts(JSON.parse(localStorage.getItem(KEYCONTACTS)));
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem(KEYCONTACTS, JSON.stringify(contacts));
-    }, [contacts]);
+    const dispatch = useDispatch()
 
     const onSubmit = (user) => {
         if (contacts && contacts.find(contact => {
@@ -29,30 +17,31 @@ const Phonebook = () => {
             return contact.name.toLowerCase() === normalizeUser
         })) { alert("Даний контакт вже є в телефонній") }
         else {
-            const newUser = { id: nanoid(), ...user }
-            setContacts((pref) => [...pref, newUser])
+            dispatch(addContacts(user))
         }
     }
 
     const handleChange = e => {
-        setFilter(e.target.value)
+        dispatch(setFilter(e.target.value))
     };
 
     const handleRemove = e => {
-        setContacts(contacts.filter(value => value.id !== e.currentTarget.parentNode.id))
+        dispatch(deleteContacts(e.currentTarget.parentNode.id))
+
     };
 
     const getVizibleContacts = () => {
-        const normalizedFilter = filter.toLowerCase();
+        if (filter) {
+            const normalizedFilter = filter.toLowerCase();
 
-        if (contacts) {
-            return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
-        };
+            if (contacts) {
+                return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
+            };
+        }
 
-        return []
+        return contacts
 
     };
-
 
     return (
         <>

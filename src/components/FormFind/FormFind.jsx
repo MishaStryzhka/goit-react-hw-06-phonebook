@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import css from "./FormFind.module.css"
 
-// import css from './FormFind.module.css';
-
 const FormFind = ({ value, handleChange }) => {
     return <form className={css.form} >
         <label className={css.label}>Find contacts by name</label>
@@ -20,7 +18,7 @@ const FormFind = ({ value, handleChange }) => {
 
 FormFind.propTypes = {
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
 
 }
 
